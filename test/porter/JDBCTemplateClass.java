@@ -1,6 +1,7 @@
 package porter;
 
 import com.delta.core.porter.annotation.Entity;
+import com.delta.core.porter.annotation.Ignore;
 import com.delta.core.porter.annotation.TreatAs;
 
 @Entity("s")
@@ -15,7 +16,7 @@ public class JDBCTemplateClass {
 
     }
 
-    //    @Ignore
+    @Ignore
     public int getSid() {
         return sid;
     }
