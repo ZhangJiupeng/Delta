@@ -1,5 +1,5 @@
 ### Java template
-*.class
+# *.class
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -13,3 +13,8 @@
 hs_err_pid*
 
 # Created by .ignore support plugin (hsz.mobi)
+out
+.idea
+delta.iml
+test/garbage
+src/com/delta/garbage
