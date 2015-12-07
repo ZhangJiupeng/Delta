@@ -1,7 +1,8 @@
 # Delta
-A lightweight solution for java web developers.
+> A lightweight solution for java web developers.
 
-> Potter is provide now, it is a utility for JavaCode-Database options.
+Potter has been provided, it is base on a simple JDBC connection pool and support annotation for beans. 
+In short, it can synchronize your java bean and data table easier, as the examples list below.
 
 ```javascript
 @Test 
@@ -31,3 +32,5 @@ public void updateBeanTest() throws IllegalBeanEntityException {
     Porter.updateBeans(templateClass, "sid = 6"); 
 } 
 ```
+
+Coding is creation, let's enjoy it!
