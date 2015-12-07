@@ -1,8 +1,7 @@
 # Delta
 > A lightweight solution for java web developers.
 
-Potter has been provided, it is base on a simple JDBC connection pool and support annotation for beans. 
-In short, it can synchronize your java bean and data table easier, as the examples list below.
+######Potter has been provided, it is base on a simple JDBC connection pool and support annotation for beans. In short, it can synchronize your java bean and data table easier, as the examples list below.
 
 ```javascript
 @Test 
@@ -33,4 +32,4 @@ public void updateBeanTest() throws IllegalBeanEntityException {
 } 
 ```
 
-Coding is creation, let's enjoy it!
+***Coding is creation, let's enjoy it!***
