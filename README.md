@@ -3,7 +3,7 @@
 
 ######Potter has been provided, it is base on a simple JDBC connection pool and support annotation for beans. In short, it can synchronize your java bean and data table easier, as the examples list below.
 
-```javascript
+```java
 @Test 
 public void loadBeansTest() throws IllegalBeanEntityException { 
     Porter.loadBeans(JDBCTemplateClass.class).forEach(System.out::println); 
