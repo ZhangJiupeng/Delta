@@ -5,6 +5,8 @@ import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +30,7 @@ public final class JDBCUtil {
     private transient final static int poolSize;
     private transient final static int minPoolSize;
     private transient final static String url;
+    private static PrintWriter logWriter;
 
     /**
      * This utility needs a related file <strong>jdbc.properties</strong><br/>
@@ -85,6 +88,8 @@ public final class JDBCUtil {
                 e.printStackTrace();
             }
         }
+        println("[REMIND]\t" + (new java.util.Date())
+                + "\t" + "Ensure Capacity to " + poolSize + " now!");
     }
 
     /**
@@ -149,6 +154,17 @@ public final class JDBCUtil {
         }
     }
 
+    private static void println(String str) {
+        if (logWriter != null) {
+            logWriter.println(str);
+            logWriter.flush();
+        }
+    }
+
+    public static void setPrintStream(PrintStream ps) {
+        JDBCUtil.logWriter = new PrintWriter(ps);
+    }
+
     /**
      * Basic method for database update.
      *
@@ -160,6 +176,7 @@ public final class JDBCUtil {
         Connection connection = getConnection();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             fillPreparedStatementParams(ps, obj);
+            println("[REMIND]\t" + (new java.util.Date()) + "\t" + ps);
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -180,6 +197,7 @@ public final class JDBCUtil {
         Connection connection = getConnection();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             fillPreparedStatementParams(ps, obj);
+            println("[REMIND]\t" + (new java.util.Date()) + "\t" + ps);
             return ps.executeLargeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -313,6 +331,7 @@ public final class JDBCUtil {
         CachedRowSet cachedRowSet = null;
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             fillPreparedStatementParams(ps, obj);
+            println("[REMIND]\t" + (new java.util.Date()) + "\t" + ps);
             ResultSet resultSet = ps.executeQuery();
             cachedRowSet = rowSetFactory.createCachedRowSet();
             cachedRowSet.populate(resultSet);
@@ -336,6 +355,7 @@ public final class JDBCUtil {
         Connection connection = getConnection();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             fillPreparedStatementParams(ps, obj);
+            println("[REMIND]\t" + (new java.util.Date()) + "\t" + ps);
             return ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
