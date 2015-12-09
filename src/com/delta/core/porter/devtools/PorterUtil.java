@@ -12,13 +12,13 @@ import java.util.Map;
 import java.util.Set;
 
 @SuppressWarnings("ALL")
-public final class PorterUtil {
+public class PorterUtil {
 
     public static void createBeanByTableReference(String tableName) throws IOException {
         if (tableName == null || tableName.length() == 0) {
             return;
         }
-        createBeanByTableReference(tableName, tableName.substring(0, 1).toUpperCase()
+        createBeanByTableReference(tableName, "src/" + tableName.substring(0, 1).toUpperCase()
                 + tableName.substring(1).toLowerCase() + ".java");
     }
 
@@ -30,8 +30,7 @@ public final class PorterUtil {
                 + tableName.substring(1).toLowerCase();
         Map<String, String> paramMap = new HashMap<>();
         try (ResultSet rs = JDBCUtil.executeQuery("desc " + tableName)) {
-            while(rs.next()) {
-                System.out.println(rs.getString(1));
+            while (rs.next()) {
                 paramMap.put(rs.getString(1),
                         getSimpleTypeString(rs.getString(2).toLowerCase()));
             }
@@ -71,7 +70,7 @@ public final class PorterUtil {
                     + paramName.substring(0, 1).toUpperCase() + paramName.substring(1) + "("
                     + paramMap.get(paramName) + " " + paramName + ") {");
             writer.newLine();
-            writer.write("\t\tthis." + paramName  + " = " + paramName + ";");
+            writer.write("\t\tthis." + paramName + " = " + paramName + ";");
             writer.newLine();
             writer.write("\t}");
             writer.newLine();
@@ -82,23 +81,42 @@ public final class PorterUtil {
     }
 
     private static String getSimpleTypeString(String dbType) {
-        if (dbType.startsWith("int")) { return "int"; }
-        else if (dbType.startsWith("double")) { return "double"; }
-        else if (dbType.startsWith("char")) { return "String"; }
-        else if (dbType.startsWith("varchar")) { return "String"; }
-        else if (dbType.startsWith("nvarchar")) { return "String"; }
-        else if (dbType.startsWith("nchar")) { return "String"; }
-        else if (dbType.startsWith("text")) { return "String"; }
-        else if (dbType.startsWith("bit")) { return "boolean"; }
-        else if (dbType.startsWith("binary")) { return "byte[]"; }
-        else if (dbType.startsWith("image")) { return "byte[]"; }
-        else if (dbType.startsWith("real")) { return "float"; }
-        else if (dbType.startsWith("bigint")) { return "long"; }
-        else if (dbType.startsWith("tinyint")) { return "short"; }
-        else if (dbType.startsWith("smallint")) { return "short"; }
-        else if (dbType.startsWith("decimal")) { return "java.math.BigDecimal"; }
-        else if (dbType.startsWith("numeric")) { return "java.math.BigDecimal"; }
-        else if (dbType.startsWith("datetime")) { return "java.sql.Times"; }
-        else { return "Object"; }
+        if (dbType.startsWith("int")) {
+            return "int";
+        } else if (dbType.startsWith("double")) {
+            return "double";
+        } else if (dbType.startsWith("char")) {
+            return "String";
+        } else if (dbType.startsWith("varchar")) {
+            return "String";
+        } else if (dbType.startsWith("nvarchar")) {
+            return "String";
+        } else if (dbType.startsWith("nchar")) {
+            return "String";
+        } else if (dbType.startsWith("text")) {
+            return "String";
+        } else if (dbType.startsWith("bit")) {
+            return "boolean";
+        } else if (dbType.startsWith("binary")) {
+            return "byte[]";
+        } else if (dbType.startsWith("image")) {
+            return "byte[]";
+        } else if (dbType.startsWith("real")) {
+            return "float";
+        } else if (dbType.startsWith("bigint")) {
+            return "long";
+        } else if (dbType.startsWith("tinyint")) {
+            return "short";
+        } else if (dbType.startsWith("smallint")) {
+            return "short";
+        } else if (dbType.startsWith("decimal")) {
+            return "java.math.BigDecimal";
+        } else if (dbType.startsWith("numeric")) {
+            return "java.math.BigDecimal";
+        } else if (dbType.startsWith("datetime")) {
+            return "java.sql.Times";
+        } else {
+            return "Object";
+        }
     }
 }
