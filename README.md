@@ -1,4 +1,4 @@
-# Delta
+# ![](http://7xp1jv.com1.z0.glb.clouddn.com/deltamark.png) Delta
 
 ######Potter is a kind of JDBC utility and it has been provided, it is base on a simple JDBC connection pool and support annotation for beans. In short, it can synchronize your java bean and data table easier, as the examples list below.
 
