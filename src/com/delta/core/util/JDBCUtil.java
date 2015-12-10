@@ -81,11 +81,13 @@ public final class JDBCUtil {
      * The pool size is always between minPoolSize and poolSize.
      */
     private static void ensureCapacity() {
-        for (int i = minPoolSize; i < poolSize; i++) {
-            try {
-                connections.add(DriverManager.getConnection(url, properties));
-            } catch (SQLException e) {
-                e.printStackTrace();
+        synchronized (connections) {
+            for (int i = minPoolSize; i < poolSize; i++) {
+                try {
+                    connections.add(DriverManager.getConnection(url, properties));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         println("[REMIND]\t" + (new java.util.Date())
