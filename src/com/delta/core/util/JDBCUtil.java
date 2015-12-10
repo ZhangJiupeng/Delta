@@ -45,7 +45,6 @@ public final class JDBCUtil {
     private transient static Properties properties;
 
     static {
-        // DriverManager.setLogWriter(new PrintWriter(System.out));
         properties = new Properties();
         try (InputStream is = ClassLoader.getSystemResourceAsStream("jdbc.properties")) {
             properties.load(is);
@@ -64,12 +63,17 @@ public final class JDBCUtil {
         poolSize = t_poolSize == 0 ? 10 : t_poolSize;
         minPoolSize = t_minPoolSize == 0 ? 2 : t_minPoolSize;
         url = properties.getProperty("url");
+        if (properties.getProperty("showLog").equals("true")) {
+            setPrintStream(System.out);
+        }
         try {
             connections = new ArrayList<>();
             for (int i = 0; i < poolSize; i++) {
                 connections.add(DriverManager.getConnection(url, properties));
             }
             rowSetFactory = RowSetProvider.newFactory();
+            println("[REMIND]\t" + (new java.util.Date())
+                    + "\t" + "Connection pool initilized successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);
@@ -91,7 +95,7 @@ public final class JDBCUtil {
             }
         }
         println("[REMIND]\t" + (new java.util.Date())
-                + "\t" + "Ensure Capacity to " + poolSize + " now!");
+                + "\t" + "Ensure capacity to " + poolSize + ".");
     }
 
     /**
@@ -178,7 +182,8 @@ public final class JDBCUtil {
         Connection connection = getConnection();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             fillPreparedStatementParams(ps, obj);
-            println("[REMIND]\t" + (new java.util.Date()) + "\t" + ps);
+            println("[REMIND]\t" + (new java.util.Date()) + "\tExecute SQL ["
+                    + ps.toString().substring(ps.toString().indexOf(": ") + 2) + "]");
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -199,7 +204,8 @@ public final class JDBCUtil {
         Connection connection = getConnection();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             fillPreparedStatementParams(ps, obj);
-            println("[REMIND]\t" + (new java.util.Date()) + "\t" + ps);
+            println("[REMIND]\t" + (new java.util.Date()) + "\tExecute SQL ["
+                    + ps.toString().substring(ps.toString().indexOf(": ") + 2) + "]");
             return ps.executeLargeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -333,7 +339,8 @@ public final class JDBCUtil {
         CachedRowSet cachedRowSet = null;
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             fillPreparedStatementParams(ps, obj);
-            println("[REMIND]\t" + (new java.util.Date()) + "\t" + ps);
+            println("[REMIND]\t" + (new java.util.Date()) + "\tExecute SQL ["
+                    + ps.toString().substring(ps.toString().indexOf(": ") + 2) + "]");
             ResultSet resultSet = ps.executeQuery();
             cachedRowSet = rowSetFactory.createCachedRowSet();
             cachedRowSet.populate(resultSet);
@@ -357,7 +364,8 @@ public final class JDBCUtil {
         Connection connection = getConnection();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             fillPreparedStatementParams(ps, obj);
-            println("[REMIND]\t" + (new java.util.Date()) + "\t" + ps);
+            println("[REMIND]\t" + (new java.util.Date()) + "\tExecute SQL ["
+                    + ps.toString().substring(ps.toString().indexOf(": ") + 2) + "]");
             return ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
