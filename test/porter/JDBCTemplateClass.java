@@ -7,7 +7,7 @@ import com.delta.core.porter.annotation.TreatAs;
 @Entity("s")
 public class JDBCTemplateClass {
     private int sid;
-    @TreatAs("s_name") // TODO This Annotation Not Done Yet.
+//    @TreatAs("s_name") // TODO This Annotation Not Done Yet.
     private String sname;
     private int age;
     private char sex;
@@ -16,7 +16,7 @@ public class JDBCTemplateClass {
 
     }
 
-    @Ignore
+//    @Ignore
     public int getSid() {
         return sid;
     }

@@ -24,6 +24,8 @@ import java.util.*;
  */
 public class Porter {
 
+    private Porter(){}
+
     /**
      * Mapping to table and load beans for you.
      *

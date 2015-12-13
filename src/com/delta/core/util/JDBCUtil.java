@@ -32,6 +32,8 @@ public final class JDBCUtil {
     private transient final static String url;
     private static PrintWriter logWriter;
 
+    private JDBCUtil(){}
+
     /**
      * This utility needs a related file <strong>jdbc.properties</strong><br/>
      * and <strong>DriverManager</strong> below can ask <strong>SystemClassLoader</strong>
