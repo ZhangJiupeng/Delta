@@ -32,5 +32,6 @@ public class RequestFilter implements Filter {
     @Override
     public void destroy() {
         System.out.println("doDestroy");
+        ActionMapping.clear();
     }
 }

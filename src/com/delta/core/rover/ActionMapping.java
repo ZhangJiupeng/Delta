@@ -87,6 +87,12 @@ public class ActionMapping {
         return null;
     }
 
+    public static void clear() {
+        getMap.clear();
+        postMap.clear();
+        controllers.clear();
+    }
+
     @Test
     public void test() throws Exception {
         load(MyAction.class);

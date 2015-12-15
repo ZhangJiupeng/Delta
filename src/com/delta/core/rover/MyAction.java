@@ -14,7 +14,7 @@ public class MyAction {
         request.setAttribute("a", 456);
         System.out.println("HAHAHa");
 //        response.getWriter().print("asd");
-        return "chain:/hehe";
+        return "/index.jsp";
     }
     @RequestMapping(pattern = "/hehe")
     public String play(HttpServletRequest request, HttpServletResponse response) {
