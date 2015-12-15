@@ -10,6 +10,7 @@ import java.io.IOException;
 public class RequestFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        // TODO
         try {
             ActionMapping.load(MyAction.class);
         } catch (Exception e) {
@@ -19,7 +20,6 @@ public class RequestFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("doFilter");
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         if (!req.getRequestURI().contains(".")) {
@@ -31,7 +31,6 @@ public class RequestFilter implements Filter {
 
     @Override
     public void destroy() {
-        System.out.println("doDestroy");
         ActionMapping.clear();
     }
 }

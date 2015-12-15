@@ -2,7 +2,6 @@ package com.delta.core.rover;
 
 import com.delta.core.rover.annotation.Controller;
 import com.delta.core.rover.annotation.RequestMapping;
-import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,30 +46,24 @@ public class ActionMapping {
     }
 
     public static Method match(HttpServletRequest request) {
-        System.out.println("Matching...");
         String target = request.getRequestURI();
         target = target.substring(0, target.lastIndexOf('.'));
         switch (request.getMethod()) {
             case "GET":
-                System.out.println("GETing");
                 for (String key : getMap.keySet()) {
-                    System.out.println(key + " <-> " + target);
                     if (key.equals(target)) {
                         return getMap.get(target);
                     }
                 }
                 break;
             case "POST":
-                System.out.println("Posting");
                 for (String key : postMap.keySet()) {
-                    System.out.println(key + " <-> " + target);
                     if (key.equals(target)) {
                         return postMap.get(target);
                     }
                 }
                 break;
         }
-        System.out.println("Nothing found.");
         return null;
     }
 
@@ -91,12 +84,5 @@ public class ActionMapping {
         getMap.clear();
         postMap.clear();
         controllers.clear();
-    }
-
-    @Test
-    public void test() throws Exception {
-        load(MyAction.class);
-//        System.out.println(postMap.get("/my/login").getClass());
-//        doAction(postMap.get("/my/login"), null);
     }
 }
