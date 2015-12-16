@@ -35,7 +35,6 @@ public class Assembler {
             throw new DetachException(implementClazz + " has no associated interfaces.");
         }
         for (Method method : target.getClass().getMethods()) {
-            System.out.println(method + ", " + method.getAnnotation(Detachable.class));
             if (method.getAnnotation(Detachable.class) != null
                     && method.getParameterCount() == 1
                     && implementClazz.getInterfaces().length > 0
