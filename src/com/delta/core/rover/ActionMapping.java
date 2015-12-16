@@ -1,12 +1,16 @@
 package com.delta.core.rover;
 
+import com.delta.core.assembler.Assembler;
 import com.delta.core.rover.annotation.Controller;
 import com.delta.core.rover.annotation.RequestMapping;
+import com.delta.core.rover.except.IllegalControllerException;
+import com.test.service.impl.TestServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,23 +25,33 @@ public class ActionMapping {
         postMap = new HashMap<>();
     }
 
-    public static void load(Class clazz) throws Exception {
+    public static void load(Class clazz) throws IllegalControllerException {
         if (clazz.getAnnotation(Controller.class) == null) {
-            throw new Exception("");
+            throw new RuntimeException("loading failed " + clazz);
         }
-        controllers.put(clazz.getName(), clazz.newInstance());
         Controller controller = (Controller) clazz.getAnnotation(Controller.class);
         String namespace = controller.namespace();
         for (Method method : clazz.getMethods()) {
-            RequestMapping[] requestMapping = method.getAnnotationsByType(RequestMapping.class);
-            if (requestMapping.length != 0) {
-                for (RequestMapping reqMapping : requestMapping) {
-                    switch (reqMapping.method()) {
+            RequestMapping requestMapping = method.getAnnotation(RequestMapping.class);
+            if (requestMapping != null) {
+                Type[] paramTypes = method.getGenericParameterTypes();
+                if (paramTypes.length != 2
+                        || paramTypes[0] != HttpServletRequest.class
+                        || paramTypes[1] != HttpServletResponse.class
+                        || method.getReturnType() != String.class) {
+                    throw new IllegalControllerException("check your method declare at " + clazz + " if String "
+                            + method.getName() + "(HttpServletRequest request, HttpServletResponse response).");
+                }
+                if (method.getExceptionTypes().length != 0) {
+                    throw new IllegalControllerException("You must deal with exceptions yourself in controller " + clazz + ".");
+                }
+                for (String pattern : requestMapping.patterns()) {
+                    switch (requestMapping.method()) {
                         case RequestMethod.GET:
-                            getMap.put(namespace + reqMapping.pattern(), method);
+                            getMap.put(namespace + pattern, method);
                             break;
                         case RequestMethod.POST:
-                            postMap.put(namespace + reqMapping.pattern(), method);
+                            postMap.put(namespace + pattern, method);
                             break;
                     }
                 }

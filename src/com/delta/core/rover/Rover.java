@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 @WebServlet(urlPatterns = "*.rover")
-public class Rover extends HttpServlet {
+public class Rover extends HttpServlet implements ActionServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -19,6 +19,17 @@ public class Rover extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+    }
+
+    @Override
+    public String doAction(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Method method = ActionMapping.match(req);
+        if (method == null) {
+            resp.sendError(404);
+            return null;
+        } else {
+            return ActionMapping.doAction(method, req, resp);
+        }
     }
 
     @Override
@@ -36,15 +47,5 @@ public class Rover extends HttpServlet {
             }
         }
         super.service(req, resp);
-    }
-
-    protected String doAction(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Method method = ActionMapping.match(req);
-        if (method == null) {
-            resp.sendError(404);
-            return null;
-        } else {
-            return ActionMapping.doAction(method, req, resp);
-        }
     }
 }

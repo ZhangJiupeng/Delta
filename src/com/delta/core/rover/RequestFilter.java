@@ -10,9 +10,8 @@ import java.io.IOException;
 public class RequestFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        // TODO
         try {
-            ActionMapping.load(MyAction.class);
+            Initializer.doInit();
         } catch (Exception e) {
             e.printStackTrace();
         }
