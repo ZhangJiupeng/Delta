@@ -37,11 +37,11 @@ public class Rover extends HttpServlet implements ActionServlet {
         String direct = doAction(req, resp);
         if (direct != null) {
             if (direct.startsWith("redirect:")) {
-                resp.sendRedirect(direct.substring(9));
+                resp.sendRedirect(direct.substring("redirect:".length()));
             } else if (direct.startsWith("chain:")) {
                 String path = req.getRequestURI();
                 resp.sendRedirect(path.substring(0, path.lastIndexOf('/'))
-                        + direct.substring(6));
+                        + direct.substring("chain:".length()));
             } else {
                 req.getRequestDispatcher(direct).forward(req, resp);
             }

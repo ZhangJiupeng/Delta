@@ -8,6 +8,8 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = "/*", dispatcherTypes = DispatcherType.REQUEST)
 public class RequestFilter implements Filter {
+    // TODO 建立路径的白名单，对URL进行过滤，提高项目的安全度
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         try {

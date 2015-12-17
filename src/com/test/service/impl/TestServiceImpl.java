@@ -8,10 +8,6 @@ public class TestServiceImpl implements TestService {
 
     private TestDao testDao;
 
-    public TestDao getTestDao() {
-        return testDao;
-    }
-
     @Detachable
     public void setTestDao(TestDao testDao) {
         this.testDao = testDao;

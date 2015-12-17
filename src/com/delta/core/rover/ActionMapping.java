@@ -1,13 +1,14 @@
 package com.delta.core.rover;
 
-import com.delta.core.assembler.Assembler;
 import com.delta.core.rover.annotation.Controller;
 import com.delta.core.rover.annotation.RequestMapping;
+import com.delta.core.rover.except.AccessDenyException;
 import com.delta.core.rover.except.IllegalControllerException;
-import com.test.service.impl.TestServiceImpl;
+import com.delta.core.rover.except.IllegalInterceptStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -16,11 +17,13 @@ import java.util.Map;
 
 public class ActionMapping {
     public static Map<String, Object> controllers;
+    public static Map<Class<?>, ActionInterceptor> interceptors;
     public static Map<String, Method> getMap;
     public static Map<String, Method> postMap;
 
     static {
         controllers = new HashMap<>();
+        interceptors = new HashMap<>();
         getMap = new HashMap<>();
         postMap = new HashMap<>();
     }
@@ -64,28 +67,37 @@ public class ActionMapping {
         target = target.substring(0, target.lastIndexOf('.'));
         switch (request.getMethod()) {
             case "GET":
-                for (String key : getMap.keySet()) {
-                    if (key.equals(target)) {
+                for (String key : getMap.keySet())
+                    if (key.equals(target))
                         return getMap.get(target);
-                    }
-                }
                 break;
             case "POST":
-                for (String key : postMap.keySet()) {
-                    if (key.equals(target)) {
+                for (String key : postMap.keySet())
+                    if (key.equals(target))
                         return postMap.get(target);
-                    }
-                }
                 break;
         }
         return null;
     }
 
-    public static String doAction(Method method, HttpServletRequest request, HttpServletResponse response) {
+    public static String doAction(Method method, HttpServletRequest request, HttpServletResponse response) throws IOException {
         for (String key : controllers.keySet()) {
             if (key.equals(method.getDeclaringClass().getName())) {
+                ActionInterceptor interceptor = interceptors.get(method.getDeclaringClass());
                 try {
-                    return (String) method.invoke(controllers.get(key), request, response);
+                    String resp = null;
+                    if (interceptor == null) {
+                        resp = (String) method.invoke(controllers.get(key), request, response);
+                    } else {
+                        try {
+                            if ((resp = interceptor.intercept(method, request, response)) == null) {
+                                resp = (String) method.invoke(controllers.get(key), request, response);
+                            }
+                        } catch (AccessDenyException e) {
+                            response.sendError(403);
+                        }
+                    }
+                    return resp;
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
