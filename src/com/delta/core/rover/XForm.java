@@ -5,5 +5,5 @@ public interface XForm {
         return true;
     }
 
-    <T> T convert(Class<T> clazz);
+//    <T> T convert(Class<T> clazz);
 }

@@ -21,7 +21,7 @@ public class XFormLoader {
         try {
             target = clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new XFormCastException(e.getMessage());
+            throw new XFormCastException(e.getMessage() + " check the constructor.");
         }
         for (String key : request.getParameterMap().keySet()) {
             try {

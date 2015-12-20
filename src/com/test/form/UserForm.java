@@ -40,8 +40,4 @@ public class UserForm implements XForm {
                 '}';
     }
 
-    @Override
-    public <T> T convert(Class<T> clazz) {
-        return null;
-    }
 }
