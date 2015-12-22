@@ -14,6 +14,17 @@ import java.util.Properties;
 public final class PropParser {
     private Properties properties;
 
+    public PropParser(String filePath) {
+        properties = new Properties();
+        try {
+            InputStream is = new FileInputStream(filePath);
+            properties.load(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * call this method to create a new properties file.<br/>
      * (it will be replaced if this properties file exists)
@@ -33,17 +44,6 @@ public final class PropParser {
         }
     }
 
-    public PropParser(String filePath) {
-        properties = new Properties();
-        try {
-            InputStream is = new FileInputStream(filePath);
-            properties.load(is);
-            is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * scanning properties and returns a value.<br/>
      * (if key not exists, {@code null} will be returned)
@@ -54,6 +54,7 @@ public final class PropParser {
 
     /**
      * return reference of properties
+     *
      * @return
      */
     public Properties getProperties() {

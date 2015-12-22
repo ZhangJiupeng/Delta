@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE delta SYSTEM "src/com/delta/core/rover/delta.dtd">
+<delta>
+    <settings>
+        <welcome-page>/index.jsp</welcome-page>
+        <handle-error>true</handle-error>
+        <character-encoding>UTF-8</character-encoding>
+        <blacklist>*.jsp</blacklist>
+        <!--<devmode>false</devmode>-->
+    </settings>
+    <action class="com.test.action.TestAction">
+        <service class="com.test.service.TestService" impl="com.test.service.impl.TestServiceImpl">
+            <dao class="com.test.dao.TestDao" impl="com.test.dao.impl.TestDaoImpl"/>
+            <!--<dao class="com.test.dao.TestDao" impl="com.test.dao.impl.TestDaoImpl"/>-->
+        </service>
+        <!--<service class="com.test.service.TestService" impl="com.test.service.impl.TestServiceImpl">
+            <dao class="com.test.dao.TestDao" impl="com.test.dao.impl.TestDaoImpl"/>
+            <dao class="com.test.dao.TestDao" impl="com.test.dao.impl.TestDaoImpl"/>
+        </service>-->
+        <interceptor class="com.test.interceptor.TestInterceptor"/>
+    </action>
+</delta>

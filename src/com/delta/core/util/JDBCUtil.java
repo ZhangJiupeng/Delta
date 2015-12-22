@@ -3,10 +3,8 @@ package com.delta.core.util;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
+import java.io.*;
+import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,15 +23,12 @@ import java.util.Properties;
  */
 @SuppressWarnings("ALL")
 public final class JDBCUtil {
-    private transient static ArrayList<Connection> connections;
-    private transient static RowSetFactory rowSetFactory;
     private transient final static int poolSize;
     private transient final static int minPoolSize;
     private transient final static String url;
+    private transient static ArrayList<Connection> connections;
+    private transient static RowSetFactory rowSetFactory;
     private static PrintWriter logWriter;
-
-    private JDBCUtil(){}
-
     /**
      * This utility needs a related file <strong>jdbc.properties</strong><br/>
      * and <strong>DriverManager</strong> below can ask <strong>SystemClassLoader</strong>
@@ -48,7 +43,13 @@ public final class JDBCUtil {
 
     static {
         properties = new Properties();
-        try (InputStream is = ClassLoader.getSystemResourceAsStream("jdbc.properties")) {
+        String resourceName = "jdbc.properties";
+        URL resourceUrl = Thread.currentThread().getContextClassLoader().getResource(resourceName);
+        if (resourceUrl == null) {
+            resourceUrl = JDBCUtil.class.getClassLoader().getResource(resourceName);
+        }
+        assert resourceUrl != null;
+        try (InputStream is = new FileInputStream(resourceUrl.getPath())) {
             properties.load(is);
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,6 +81,9 @@ public final class JDBCUtil {
             e.printStackTrace();
             System.exit(-1);
         }
+    }
+
+    private JDBCUtil() {
     }
 
     /**

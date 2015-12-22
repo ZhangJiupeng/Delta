@@ -18,7 +18,9 @@ import java.security.spec.AlgorithmParameterSpec;
 @SuppressWarnings("ALL")
 public final class CryptoUtil {
     private static final String ALGORITHM = "DES/CBC/PKCS5Padding";
-    private CryptoUtil(){}
+
+    private CryptoUtil() {
+    }
 
     private static String byte2hex(byte[] b) {
         StringBuilder hs = new StringBuilder();

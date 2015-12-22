@@ -11,13 +11,13 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="/form">
-        <label>
-            <input name="id"/>
-            <input name="name"/>
-            <input name="password"/>
-            <input type="submit"/>
-        </label>
-    </form>
+<form action="/form">
+    <label>
+        <input name="id"/>
+        <input name="name"/>
+        <input name="password"/>
+        <input type="submit"/>
+    </label>
+</form>
 </body>
 </html>

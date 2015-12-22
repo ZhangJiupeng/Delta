@@ -1,6 +1,7 @@
 package com.test.action;
 
 import com.delta.core.assembler.annotation.Detachable;
+import com.delta.core.rover.RequestMethod;
 import com.delta.core.rover.XForm;
 import com.delta.core.rover.XFormConverter;
 import com.delta.core.rover.XFormLoader;
@@ -38,12 +39,16 @@ public class TestAction {
     @RequestMapping(patterns = "/form")
     public String formTest(HttpServletRequest request, HttpServletResponse response) {
         try {
-            XForm userForm = XFormLoader.newInstance(UserForm.class, request);
+            XForm userForm = XFormLoader.newInstance(request, UserForm.class);
             System.out.println(userForm);
             System.out.println(XFormConverter.cast(userForm, User.class));
         } catch (XFormCastException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void showService() {
+        System.out.println(testService);
     }
 }

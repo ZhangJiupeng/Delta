@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 @SuppressWarnings("ALL")
 public class ProxyFactory {
 
-    public static <T> T getProxyInstance(Class<T> itf, Class<?> impl, Class<? extends AssemblerProxy> pxy){
+    public static <T> T getProxyInstance(Class<T> itf, Class<?> impl, Class<? extends AssemblerProxy> pxy) {
         boolean isImplements = itf == impl;
         for (Type type : impl.getGenericInterfaces())
             if (type == itf)
@@ -32,14 +32,14 @@ public class ProxyFactory {
     public static <T> T getProxyInstance(Class<T> itf, Class<?> impl, AssemblerProxy assemblerProxy) {
         Object object = Proxy.newProxyInstance(assemblerProxy.getClass().getClassLoader(),
                 new Class[]{itf}, (proxy, method, args) -> {
-            if (assemblerProxy == null) {
-                return method.invoke(impl.newInstance(), args);
-            }
-            assemblerProxy.before();
-            Object retVal = method.invoke(impl.newInstance(), args);
-            assemblerProxy.after();
-            return retVal;
-        });
+                    if (assemblerProxy == null) {
+                        return method.invoke(impl.newInstance(), args);
+                    }
+                    assemblerProxy.before();
+                    Object retVal = method.invoke(impl.newInstance(), args);
+                    assemblerProxy.after();
+                    return retVal;
+                });
         return (T) object;
     }
 
@@ -59,7 +59,8 @@ public class ProxyFactory {
             System.out.println("hah");
         });
         dao.test();
-        System.out.println((TestDao)dao);
+        System.out.println(dao.getClass());
+//        System.out.println((TestDao) dao);
     }
 
 }

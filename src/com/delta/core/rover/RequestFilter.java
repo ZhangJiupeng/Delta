@@ -8,6 +8,9 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = "/*", dispatcherTypes = DispatcherType.REQUEST)
 public class RequestFilter implements Filter {
+    public static String characterSet = "UTF-8";
+    public static String welcomePage = "";
+
     // TODO 建立路径的白名单，对URL进行过滤，提高项目的安全度
 
     @Override
@@ -21,8 +24,17 @@ public class RequestFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        // Set Character Encoding
+        servletRequest.setCharacterEncoding(characterSet);
+        servletResponse.setCharacterEncoding(characterSet);
+        servletResponse.setContentType("text/html;charset=" + characterSet);
+
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
+
+        if (req.getRequestURI().equals("/") && !welcomePage.equals("/") && !welcomePage.equals("")) {
+            req.getRequestDispatcher(req.getRequestURI() + welcomePage).forward(req, resp);
+        }
         if (!req.getRequestURI().contains(".")) {
             req.getRequestDispatcher(req.getRequestURI() + ".rover").forward(req, resp);
         } else {

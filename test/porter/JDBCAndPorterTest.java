@@ -1,8 +1,8 @@
 package porter;
 
-import com.delta.core.util.JDBCUtil;
 import com.delta.core.porter.Porter;
 import com.delta.core.porter.except.IllegalBeanEntityException;
+import com.delta.core.util.JDBCUtil;
 import org.junit.Test;
 
 import java.sql.ResultSet;

@@ -1,0 +1,42 @@
+<!ELEMENT delta (settings,action*)>
+        <!ELEMENT settings (welcome-page,handle-error,character-encoding,blacklist*)>
+
+        <!ELEMENT welcome-page (#PCDATA)>
+        <!ATTLIST welcome-page
+                val CDATA #IMPLIED "/"
+                >
+
+        <!ELEMENT handle-error (#PCDATA)>
+        <!ATTLIST handle-error
+                val (true|false) "false"
+                >
+
+        <!ELEMENT character-encoding (#PCDATA)>
+        <!ATTLIST character-encoding
+                val CDATA #IMPLIED "UTF-8"
+                >
+
+        <!ELEMENT blacklist (#PCDATA)>
+
+
+        <!ELEMENT action (service*,interceptor*)>
+        <!ATTLIST action
+                class CDATA #REQUIRED
+                >
+
+        <!ELEMENT service (dao*)>
+        <!ATTLIST service
+                class CDATA #REQUIRED
+                impl CDATA #REQUIRED
+                >
+
+        <!ELEMENT dao EMPTY>
+        <!ATTLIST dao
+                class CDATA #REQUIRED
+                impl CDATA #REQUIRED
+                >
+
+        <!ELEMENT interceptor (#PCDATA)>
+        <!ATTLIST interceptor
+                class CDATA #REQUIRED
+                >

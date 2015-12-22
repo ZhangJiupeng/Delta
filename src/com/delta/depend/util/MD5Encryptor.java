@@ -16,7 +16,9 @@ import java.security.SecureRandom;
 public final class MD5Encryptor {
     private static final String[] strDigits = {"0", "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
-    private MD5Encryptor(){}
+
+    private MD5Encryptor() {
+    }
 
     private static String byteToString(byte[] bByte) {
         StringBuilder sBuffer = new StringBuilder();
@@ -26,8 +28,7 @@ public final class MD5Encryptor {
         return sBuffer.toString();
     }
 
-    private static String byteToArrayString(byte bByte)
-    {
+    private static String byteToArrayString(byte bByte) {
         int iRet = bByte;
         if (iRet < 0) {
             iRet += 256;
@@ -65,10 +66,10 @@ public final class MD5Encryptor {
             return MD5Encryptor.encrypt(plaintext);
         }
         String resultString = plaintext;
-            try {
-                SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
-                secureRandom.setSeed(salt.getBytes());
-                String hash = String.valueOf(Math.abs(secureRandom.nextLong()));
+        try {
+            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+            secureRandom.setSeed(salt.getBytes());
+            String hash = String.valueOf(Math.abs(secureRandom.nextLong()));
             resultString = MD5Encryptor.encrypt(plaintext + hash);
         } catch (NoSuchAlgorithmException ex) {
             ex.printStackTrace();

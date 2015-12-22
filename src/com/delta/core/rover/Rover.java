@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 
 @WebServlet(urlPatterns = "*.rover")
 public class Rover extends HttpServlet implements ActionServlet {
+    public static boolean handleError = false;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

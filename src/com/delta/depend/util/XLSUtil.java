@@ -25,9 +25,6 @@ public final class XLSUtil {
     private static HSSFSheet sheet;
     private static HSSFCellStyle style;
 
-    private XLSUtil() {
-    }
-
     static {
         workbook = new HSSFWorkbook();
         // Sheet Init.
@@ -61,6 +58,9 @@ public final class XLSUtil {
         // Merge cell if needed. (startRow, endRow, startCol, endCol)
         /*sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));*/
 
+    }
+
+    private XLSUtil() {
     }
 
     /**
@@ -106,7 +106,7 @@ public final class XLSUtil {
     /**
      * simple parse of plainText and save as .xls file.
      *
-     * @param filePath give a file path on load
+     * @param filePath  give a file path on load
      * @param plainText plain pattern string
      * @throws IOException
      */

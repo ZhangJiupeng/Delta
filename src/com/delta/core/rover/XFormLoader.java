@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 
 public class XFormLoader {
 
-    public static <T> T newInstance(Class<T> clazz, HttpServletRequest request) throws XFormCastException {
+    public static <T> T newInstance(HttpServletRequest request, Class<T> clazz) throws XFormCastException {
         T target;
         boolean isXForm = false;
         for (Type type : clazz.getInterfaces())

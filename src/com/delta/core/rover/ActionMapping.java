@@ -4,7 +4,6 @@ import com.delta.core.rover.annotation.Controller;
 import com.delta.core.rover.annotation.RequestMapping;
 import com.delta.core.rover.except.AccessDenyException;
 import com.delta.core.rover.except.IllegalControllerException;
-import com.delta.core.rover.except.IllegalInterceptStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
