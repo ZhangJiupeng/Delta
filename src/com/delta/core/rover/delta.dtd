@@ -1,5 +1,5 @@
 <!ELEMENT delta (settings,action*)>
-        <!ELEMENT settings (welcome-page,handle-error,character-encoding,blacklist*)>
+        <!ELEMENT settings (welcome-page,handle-error,devmode,character-encoding,blacklist*)>
 
         <!ELEMENT welcome-page (#PCDATA)>
         <!ATTLIST welcome-page
@@ -7,8 +7,11 @@
                 >
 
         <!ELEMENT handle-error (#PCDATA)>
-        <!ATTLIST handle-error
-                val (true|false) "false"
+        <!ATTLIST handle-error (true|false) "false"
+                >
+
+        <!ELEMENT devmode (#PCDATA)>
+        <!ATTLIST handle-error (true|false) "false"
                 >
 
         <!ELEMENT character-encoding (#PCDATA)>

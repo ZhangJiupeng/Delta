@@ -4,9 +4,10 @@
     <settings>
         <welcome-page>/index.jsp</welcome-page>
         <handle-error>true</handle-error>
+        <devmode>false</devmode>
         <character-encoding>UTF-8</character-encoding>
         <blacklist>*.jsp</blacklist>
-        <!--<devmode>false</devmode>-->
+        <blacklist>*.html</blacklist>
     </settings>
     <action class="com.test.action.TestAction">
         <service class="com.test.service.TestService" impl="com.test.service.impl.TestServiceImpl">
@@ -19,4 +20,5 @@
         </service>-->
         <interceptor class="com.test.interceptor.TestInterceptor"/>
     </action>
+    <action class="com.test.action.PlayAction"/>
 </delta>

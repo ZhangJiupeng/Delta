@@ -43,7 +43,7 @@ public class Assembler {
                 return target;
             }
         }
-        throw new DetachException("nothing detached, only setters are detachable, check if the target is no need to detach or illegal implements provided.");
+        throw new DetachException("nothing detached for " + target.getClass() + ", only setters are detachable, check if the target is no need to detach or illegal implements provided.");
     }
 
 }

@@ -11,8 +11,6 @@ import java.io.IOException;
 
 @Controller(namespace = "/my")
 public class PlayAction {
-    //Rover持有的服务对象
-    TestService service;
 
     @RequestMapping(patterns = "/login", method = RequestMethod.GET)
     public String doLogin(HttpServletRequest request, HttpServletResponse response) {
