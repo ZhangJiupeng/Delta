@@ -5,13 +5,14 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 @WebFilter(urlPatterns = "/*", dispatcherTypes = DispatcherType.REQUEST)
 public class RequestFilter implements Filter {
     public static String characterSet = "UTF-8";
     public static String welcomePage = "";
-
-    // TODO 建立路径的白名单，对URL进行过滤，提高项目的安全度
+    public static Set<String> blackList = new HashSet<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -35,6 +36,13 @@ public class RequestFilter implements Filter {
         if (req.getRequestURI().equals("/") && !welcomePage.equals("/") && !welcomePage.equals("")) {
             resp.sendRedirect(welcomePage);
             return;
+        }
+
+        for (String forbidPath : blackList) {
+            if (req.getRequestURI().contains(forbidPath)) {
+                resp.sendError(404);
+                return;
+            }
         }
 
         if (!req.getRequestURI().contains(".")) {

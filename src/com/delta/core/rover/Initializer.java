@@ -89,6 +89,7 @@ public class Initializer {
                                 RequestFilter.characterSet = element1.getStringValue();
                                 break;
                             case "blacklist":
+                                RequestFilter.blackList.add(element1.getStringValue());
                                 break;
                         }
                     }

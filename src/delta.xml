@@ -6,8 +6,8 @@
         <handle-error>true</handle-error>
         <devmode>false</devmode>
         <character-encoding>UTF-8</character-encoding>
-        <blacklist>*.jsp</blacklist>
-        <blacklist>*.html</blacklist>
+        <blacklist>.jsp</blacklist>
+        <blacklist>.html</blacklist>
     </settings>
     <action class="com.test.action.TestAction">
         <service class="com.test.service.TestService" impl="com.test.service.impl.TestServiceImpl">

@@ -44,7 +44,8 @@ public class Rover extends HttpServlet implements ActionServlet {
                 resp.sendRedirect(path.substring(0, path.lastIndexOf('/'))
                         + direct.substring("chain:".length()));
             } else if (direct.startsWith("out:")) {
-                resp.getWriter().print(direct.substring("out:".length()));
+                if (!resp.isCommitted())
+                    resp.getWriter().print(direct.substring("out:".length()));
             } else {
                 req.getRequestDispatcher(direct).forward(req, resp);
             }
