@@ -64,6 +64,9 @@ public class XFormLoader {
                 throw new XFormCastException(e.getMessage() + " not found.");
             }
         }
+        if (!((XForm) target).validate()) {
+            throw new XFormCastException("validator not passed.");
+        }
         return target;
     }
 }

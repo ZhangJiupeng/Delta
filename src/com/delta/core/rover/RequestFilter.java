@@ -33,8 +33,10 @@ public class RequestFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
         if (req.getRequestURI().equals("/") && !welcomePage.equals("/") && !welcomePage.equals("")) {
-            req.getRequestDispatcher(req.getRequestURI() + welcomePage).forward(req, resp);
+            resp.sendRedirect(welcomePage);
+            return;
         }
+
         if (!req.getRequestURI().contains(".")) {
             req.getRequestDispatcher(req.getRequestURI() + ".rover").forward(req, resp);
         } else {

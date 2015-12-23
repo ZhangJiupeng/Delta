@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -68,6 +69,15 @@ public final class JDBCUtil {
         url = properties.getProperty("url");
         if (properties.getProperty("showLog").equals("true")) {
             setPrintStream(System.out);
+        }
+        String driver = properties.getProperty("driver", "default");
+        if (!driver.equals("default")) {
+            try {
+                Class.forName(driver);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                System.exit(-1);
+            }
         }
         try {
             connections = new ArrayList<>();
