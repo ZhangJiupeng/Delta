@@ -56,7 +56,7 @@ public class ProxyFactory {
     @Test
     public void test() {
         TestDao dao = ProxyFactory.getProxyInstance(TestDao.class, TestDaoImpl.class, () -> {
-            System.out.println("hah");
+            System.out.println("before dao.test()");
         });
         dao.test();
         System.out.println(dao.getClass());
