@@ -36,6 +36,10 @@ public class Rover extends HttpServlet implements ActionServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String direct = doAction(req, resp);
+        if (resp.isCommitted()) {
+            return;
+        }
+
         if (direct != null) {
             if (direct.startsWith("redirect:")) {
                 resp.sendRedirect(direct.substring("redirect:".length()));
@@ -44,8 +48,7 @@ public class Rover extends HttpServlet implements ActionServlet {
                 resp.sendRedirect(path.substring(0, path.lastIndexOf('/'))
                         + direct.substring("chain:".length()));
             } else if (direct.startsWith("out:")) {
-                if (!resp.isCommitted())
-                    resp.getWriter().print(direct.substring("out:".length()));
+                resp.getWriter().print(direct.substring("out:".length()));
             } else {
                 req.getRequestDispatcher(direct).forward(req, resp);
             }
