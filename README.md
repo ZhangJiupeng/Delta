@@ -57,7 +57,7 @@
 
 ## 如何独立使用 Porter
 
-Porter 的功能正如它的名字（搬运工）一样，它实现的核心功能即ORM，它依赖于基于连接池技术的JDBCUtil，JDBCUtil目前解除了对具体数据库的依赖，您可以在需要使用MySQL、Oracle、SQLServer以及其他关系型数据库的项目中通用代码，当然、如果您需要执行数据库相关的特定SQL语句，JDBCUtil中提供的 executeQuery / executeUpdate / execute 等方法便能完成您的需求。此外，由于执行方法的独立以及事务管理的原子性，JDBCUtil提供了组合事务合并查询的一套方法，由于在JDBCUtil是Delta框架中辅助部分，且普通用户无需直接对其操作，该手册中将不再对其详细说明，在后续版本中，JDBCUtil将通过配置文件兼容dbcp、c3p0等多组开源连接池）。
+Porter 的功能正如它的名字（搬运工）一样，它实现的核心功能即ORM，它依赖于基于连接池技术的JDBCUtil，JDBCUtil目前解除了对具体数据库的依赖，您可以在需要使用MySQL、Oracle、SQLServer以及其他关系型数据库的项目中通用代码，当然、如果您需要执行数据库相关的特定SQL语句，JDBCUtil中提供的 executeQuery / executeUpdate / execute 等方法便能完成您的需求。此外，由于执行方法的独立以及事务管理的原子性，JDBCUtil提供了组合事务合并查询的一套方法，由于在JDBCUtil是Delta框架中辅助部分，且普通用户无需直接对其操作，该手册中将不再对其详细说明，在delta_1.1版本中(JDBCUtil升级到2.1子版本)，对JDBCUtil分离出SimpleDataSource提供支持，同时也允许用户将通过配置文件配置tomcat-jdbc、c3p0等其他数据源）。
 
 使用Porter前，jdbc.properties的参数配置是必须的，它需要被提供在src主目录下，同时，数据库驱动也是必须的。
 
