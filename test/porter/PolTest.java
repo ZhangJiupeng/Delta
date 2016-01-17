@@ -1,3 +1,5 @@
+package porter;
+
 import com.delta.core.util.JDBCUtil;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
@@ -29,7 +31,7 @@ public class PolTest {
         p.setMaxWait(10000);
         p.setRemoveAbandonedTimeout(60);
         p.setMinEvictableIdleTimeMillis(30000);
-        p.setMinIdle(0);
+        p.setMinIdle(10);
         p.setLogAbandoned(true);
         p.setRemoveAbandoned(true);
         p.setJdbcInterceptors(
@@ -37,10 +39,11 @@ public class PolTest {
                         "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
         DataSource datasource = new DataSource();
         datasource.setPoolProperties(p);
-        JDBCUtil.setDataSource(datasource);
+//        JDBCUtil.setDataSource(datasource);
         ResultSet rs = JDBCUtil.executeQuery("select 1");
         JDBCUtil.executeQuery("select 1");
         JDBCUtil.executeQuery("select 1");
+        Thread.sleep(2000);
         JDBCUtil.executeQuery("select 1");
         JDBCUtil.executeQuery("select 1");
         JDBCUtil.executeQuery("select 1");

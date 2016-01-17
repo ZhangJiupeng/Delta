@@ -85,9 +85,12 @@ public class SimpleDataSource implements javax.sql.DataSource {
         }
         try {
             connection.prepareStatement(validationQuery).execute();
-        } catch (com.mysql.jdbc.exceptions.jdbc4.CommunicationsException ce) {
+        } catch (SQLRecoverableException e) {
+            e.printStackTrace();
             return getConnection();
-        } catch (SQLSyntaxErrorException se) {
+        }/* catch (com.mysql.jdbc.exceptions.jdbc4.CommunicationsException ce) {
+            return getConnection();
+        }*/ catch (SQLSyntaxErrorException se) {
             throw new RuntimeException("You have an syntax error in your validationQuery @ jdbc.properties");
         }
         return connection;
