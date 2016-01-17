@@ -91,9 +91,7 @@ public final class JDBCUtil {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (dataSource.getClass() == SimpleDataSource.class) {
-                ((SimpleDataSource) dataSource).free(connection);
-            }
+            freeConnection(connection);
         }
         return 0;
     }
@@ -116,9 +114,7 @@ public final class JDBCUtil {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (dataSource.getClass() == SimpleDataSource.class) {
-                ((SimpleDataSource) dataSource).free(connection);
-            }
+            freeConnection(connection);
         }
         return 0;
     }
@@ -155,9 +151,7 @@ public final class JDBCUtil {
             }
             e.printStackTrace();
         } finally {
-            if (dataSource.getClass() == SimpleDataSource.class) {
-                ((SimpleDataSource) dataSource).free(connection);
-            }
+            freeConnection(connection);
         }
         return new int[objects.size()];
     }
@@ -193,9 +187,7 @@ public final class JDBCUtil {
             }
             e.printStackTrace();
         } finally {
-            if (dataSource.getClass() == SimpleDataSource.class) {
-                ((SimpleDataSource) dataSource).free(connection);
-            }
+            freeConnection(connection);
         }
         return new long[objects.size()];
     }
@@ -237,9 +229,7 @@ public final class JDBCUtil {
             }
             e.printStackTrace();
         } finally {
-            if (dataSource.getClass() == SimpleDataSource.class) {
-                ((SimpleDataSource) dataSource).free(connection);
-            }
+            freeConnection(connection);
         }
         return affectedRows;
     }
@@ -266,9 +256,7 @@ public final class JDBCUtil {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (dataSource.getClass() == SimpleDataSource.class) {
-                ((SimpleDataSource) dataSource).free(connection);
-            }
+            freeConnection(connection);
         }
         return cachedRowSet;
     }
@@ -291,9 +279,7 @@ public final class JDBCUtil {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (dataSource.getClass() == SimpleDataSource.class) {
-                ((SimpleDataSource) dataSource).free(connection);
-            }
+            freeConnection(connection);
         }
         return false;
     }
@@ -334,6 +320,18 @@ public final class JDBCUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static void freeConnection(Connection connection) {
+        if (dataSource.getClass() == SimpleDataSource.class) {
+            ((SimpleDataSource) dataSource).free(connection);
+        } else {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
