@@ -5,6 +5,8 @@ import com.test.dao.TestDao;
 import com.test.dao.impl.TestDaoImpl;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 
@@ -55,12 +57,28 @@ public class ProxyFactory {
 
     @Test
     public void test() {
-        TestDao dao = ProxyFactory.getProxyInstance(TestDao.class, TestDaoImpl.class, () -> {
-            System.out.println("before dao.test()");
-        });
+//        TestDao dao = ProxyFactory.getProxyInstance(TestDao.class, TestDaoImpl.class, () -> {
+//            System.out.println("before dao.test()");
+//        });
+//        TestDao dao = new TestDaoImpl();
+//        dao.test();
+//        System.out.println(dao.getClass());
+//        System.out.println((TestDao) dao);
+
+        TestDao dao = (TestDao)Proxy.newProxyInstance(
+                TestDao.class.getClassLoader()
+                , new Class[]{TestDao.class}
+                , new InvocationHandler() {
+                    @Override
+                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                        System.out.println(1);
+                        Object returnValue = method.invoke(TestDaoImpl.class.newInstance(), args);
+                        System.out.println(2);
+                        return returnValue;
+                    }
+                });
         dao.test();
         System.out.println(dao.getClass());
-//        System.out.println((TestDao) dao);
     }
 
 }
