@@ -49,7 +49,7 @@
 
 
 
-如果您对SpringMVC、Struts2等框架已经有所了解，同时又很想快速体验Delta Framework的特色，您可以 [从Github下载](https://github.com/ZhangJiupeng/Delta) 或 [浏览由该框架实现的项目](http://www.zhangjiupeng.com/)，当然，非常欢迎您加入我们的开发过程，及时向我们提出代码解决方案、建议或者不足。项目目前正处于测试阶段，我们会持续跟进更新，敬请关注！
+如果您对SpringMVC、Struts2等框架已经有所了解，同时又很想快速体验Delta Framework的特色，您可以 [从Github下载](https://github.com/ZhangJiupeng/Delta) 或 [浏览由该框架实现的项目](http://lab.zhangjiupeng.com/)，当然，非常欢迎您加入我们的开发过程，及时向我们提出代码解决方案、建议或者不足。项目目前正处于测试阶段，我们会持续跟进更新，敬请关注！
 
 接下来是使用本框架进行快速开发的使用手册，由于Porter模块较为独立，有关它的使用说明将首先列出。
 
